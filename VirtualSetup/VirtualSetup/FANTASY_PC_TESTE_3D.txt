@@ -1,0 +1,32 @@
+FANTASY PC - TESTE DE MOTOR 3D
+================================
+
+O projeto agora possui dois modos na janela "Fantasy PC - Testes de Motor":
+
+1. Motor original 2D
+   - Mantem FantasyMachine, VirtualCpu, VirtualFramebuffer e o desenho
+     original do quadrado em movimento.
+   - Os controles Ligar, Pausar e Reiniciar continuam ligados ao motor original.
+
+2. Novo motor 3D
+   - Implementado em Fantasy3DView.java com OpenGL ES 2.0 nativo.
+   - Usa shaders GLSL, triangulos/poligonos reais, depth buffer, iluminacao
+     difusa/especular, neblina de distancia, camera em perspectiva e animacao.
+   - Arraste o dedo sobre a cena para orbitar a camera.
+   - Use o botao Camera para voltar ao angulo inicial.
+
+COMPATIBILIDADE
+---------------
+- Java 7.
+- Android API 21 ou superior.
+- OpenGL ES 2.0.
+- Sem bibliotecas Maven ou dependencias externas.
+- O motor 3D e independente do FantasyMachine e nao substitui o framebuffer 2D.
+
+NOTA DE DESEMPENHO
+------------------
+A cena e uma demonstracao real de rasterizacao 3D via GPU, nao um jogo AAA.
+Graficos de videogames de 2024 exigem modelos, texturas, mapas de sombra,
+materiais PBR e conteudo de alta qualidade, alem de GPU e memoria adequadas.
+Esta implementacao e uma base leve e funcional para evoluir nessa direcao,
+mantendo compatibilidade com aparelhos Android modestos.

@@ -1,0 +1,103 @@
+VIRTUAL SETUP V0.0.14 - FANTASY PC CORE UPGRADE
+================================================
+
+COMPATIBILIDADE
+- Java 7 puro: sourceCompatibility/targetCompatibility 1.7.
+- Sem lambdas, method references, Streams, records, var ou APIs Java modernas.
+- Sem bibliotecas externas. Somente framework Android nativo.
+- Mantido Android Gradle Plugin 3.5.0 e compileSdk 29 da base recebida.
+- O projeto continua usando android.app.Activity, sem AppCompat/Material.
+
+EVOLUCAO DO FANTASY PC
+- CPU FantasyISA com ciclo real fetch/decode/execute.
+- Oito registradores de 16 bits (R0-R7), PC, SP e flags Zero/Carry/Negative.
+- Aritmetica: ADD, ADDI, SUB, SUBI, MUL, DIV, INC e DEC.
+- Logica: AND, OR, XOR, NOT, SHL e SHR.
+- Controle: JMP, JZ, JNZ, JC, JN, CALL, RET e HALT.
+- Memoria: LOAD/STORE de palavras de 16 bits, leitura/escrita de bytes,
+  carga de programas com validacao de limites e contadores de acesso.
+- Pilha: PUSH/POP e retorno de subrotina.
+- Barramento de E/S com 256 portas, contadores e dispositivo de video.
+- Framebuffer com recorte de retangulos e leitura de pixel.
+- Programas com copia defensiva do codigo e catalogo com busca/substituicao.
+- Construtor de programas com helpers LDI, ADDI, JMP e HALT.
+- Janela Fantasy PC demonstra a CPU executando um contador real em loop.
+
+CODIFICACAO DA FANTASYISA
+- Registradores: 0 a 7 (R0 a R7).
+- Palavras de 16 bits: little-endian (byte menos significativo primeiro).
+- LDI reg, imediato16: opcode, reg, low, high.
+- MOV/ADD/SUB/MUL/DIV/AND/OR/XOR/CMP: opcode, regA, regB.
+- LOAD/STORE: opcode, reg, enderecoLow, enderecoHigh.
+- ADDI/SUBI: opcode, reg, imediato8.
+- INC/DEC/NOT/SHL/SHR/PUSH/POP: opcode, reg.
+- JMP/JZ/JNZ/JC/JN/CALL: opcode, enderecoLow, enderecoHigh.
+- OUT: opcode, porta8, reg. IN: opcode, reg, porta8.
+- NOP e RET e HALT: apenas opcode.
+- A CPU interrompe com estado HALT em opcode invalido, divisao por zero
+  ou acesso invalido a instrucoes/pilha. O motivo fica em getLastFault().
+
+PORTAS DE VIDEO
+- 0x10: coordenada X
+- 0x11: coordenada Y
+- 0x12: componente vermelha (R)
+- 0x13: componente verde (G)
+- 0x14: componente azul (B)
+- 0x15: comando: 1 desenha pixel; 2 limpa o framebuffer
+- 0x20 (leitura): estado da CPU (1 = HALT)
+
+OBSERVACOES
+- A janela de monitor ainda possui um padrao visual de demonstracao para
+  validar o desenho e a atualizacao do framebuffer.
+- A arquitetura de CPU/ISA e independente do Android; a UI apenas controla
+  a cadencia de execucao e apresenta os registradores.
+- A base original foi mantida para desktop, janelas, explorador, bloco de notas,
+  papel de parede e barra de tarefas. As alteracoes concentram-se no nucleo
+  Fantasy PC e na declaracao explicita de Java 7.
+
+
+APLICATIVOS DE TEXTO FANTASY (NOVO)
+----------------------------------
+O Disco C: agora aceita aplicativos descritos em arquivos de texto UTF-8.
+A primeira linha obrigatoria e: FANTASY_APP 1
+
+Exemplo de arquivo: C:\\Programas\\Fantasy PC\\Exemplo.fpc
+O arquivo Exemplo.fpc e criado automaticamente na primeira inicializacao do Disco C:.
+Tambem e possivel salvar um arquivo .txt com esse cabecalho; ao abrir pelo Explorer,
+ele sera executado como aplicativo. Arquivos .txt comuns continuam abrindo no Notepad.
+
+Comandos (um por linha; campos separados por |):
+  TITLE|Meu aplicativo
+  SIZE|340|300
+  BACKGROUND|#ECE9D8
+  LABEL|id|Texto inicial
+  INPUT|id|Texto de ajuda
+  BUTTON|id|Texto do botao|ACAO|parametros...
+
+Acoes suportadas:
+  MESSAGE|titulo|mensagem
+  SET_TEXT|id_do_LABEL|novo texto
+  APPEND_TEXT|id_do_LABEL|texto adicional
+  INCREMENT|id_do_LABEL|valor_inteiro
+  SET_FROM_INPUT|id_do_LABEL|id_do_INPUT
+  MESSAGE_INPUT|id_do_INPUT|titulo|prefixo
+  RANDOM|id_do_LABEL|minimo|maximo
+  CLOSE
+
+Exemplo:
+  FANTASY_APP 1
+  TITLE|Contador
+  SIZE|320|260
+  LABEL|pontos|0
+  BUTTON|mais|Somar ponto|INCREMENT|pontos|1
+  BUTTON|zerar|Zerar|SET_TEXT|pontos|0
+  BUTTON|sair|Fechar|CLOSE
+
+Limites de seguranca e desempenho:
+- Arquivo de no maximo 64 KB, 256 linhas e 96 componentes.
+- Largura entre 220 e 600 dp; altura entre 160 e 700 dp.
+- O interpretador executa somente os comandos documentados acima.
+- Nao executa Java, APK, EXE, comandos do Android/Linux, bibliotecas externas
+  ou codigo nativo. Cada programa roda em uma janela independente do desktop
+  virtual, usando a infraestrutura DesktopWindow ja existente.
+- Os antigos arquivos binarios FantasyISA continuam reconhecidos pelo monitor.

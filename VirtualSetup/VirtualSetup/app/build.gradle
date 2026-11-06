@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.example.desktopenv"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 14
+        versionName "0.0.14"
+    }
+
+    // Mantem compatibilidade com compiladores antigos do Android IDE / AIDE.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+// ZERO dependencias externas: nada de AppCompat, Material ou Compose.
+// Somente o framework Android nativo (android.jar).
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

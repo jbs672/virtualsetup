@@ -1,0 +1,18 @@
+VIRTUAL SETUP 0.0.14 - CORRECAO DE COMPILACAO
+
+Correcoes realizadas nesta revisao:
+1. MainActivity.java: corrigida a string da janela "Sobre", que estava quebrada em duas linhas fisicas e provocava erros em cascata.
+2. VirtualDisk.java: substituida a referencia inexistente FantasyIsa.JUMP por um programa de demonstracao valido usando a instrucao JMP/ISA real via builder.
+3. Programa demo: agora carrega 5 e 7, soma os valores, grava 12 no endereco 0x0200 e termina com HALT.
+
+Compatibilidade:
+- compileOptions permanece em Java 7.
+- Nenhuma lambda foi encontrada nos 29 arquivos Java.
+- Nenhuma dependencia externa foi adicionada.
+
+Validacao executada:
+- Nucleo Fantasy PC compilado com javac moderno em modo de linguagem compativel (source/target 8, pois o JDK disponivel nao aceita mais source 7).
+- Teste funcional da demo: 5 + 7 = 12; memoria 0x0200 = 12; CPU finaliza em HALT sem falha.
+
+LIMITACAO:
+Este ambiente nao possui Android SDK/android.jar nem o compilador Android IDE. Portanto, a compilacao integral do aplicativo dentro do Android IDE nao pode ser certificada aqui. Abra o projeto no Android IDE e compile para validar a integracao com o framework Android do seu dispositivo.

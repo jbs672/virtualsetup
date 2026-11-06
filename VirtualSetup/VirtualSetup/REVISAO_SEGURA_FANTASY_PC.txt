@@ -1,0 +1,23 @@
+REVISAO SEGURA - FANTASY PC / VIRTUALSETUP
+Base analisada: VirtualSetup.zip recebido em 06/11/2026
+
+POLITICA DE PRESERVACAO
+Esta revisao nao substituiu nem removeu arquivos existentes. Nenhum arquivo-fonte do sistema operacional simulado, DesktopCoreEngine, FantasyMachine, motor 2D, interface, armazenamento virtual ou manifest foi alterado.
+
+ACHADOS TECNICOS IMPORTANTES
+1. O projeto declara sourceCompatibility/targetCompatibility Java 7 no app/build.gradle.
+2. A renderizacao 3D usa GLSurfaceView e OpenGL ES 2.0; o caminho Canvas e uma alternativa de compatibilidade.
+3. SuperComputerEngine.java existe, mas nao ha referencia a ele em FantasyPcView.java nem em Fantasy3DView.java. Portanto, na base recebida, o motor de computacao ainda nao coordena a renderizacao 3D. Nao seria correto afirmar que essa integracao ja existe.
+4. O benchmark atual de SuperComputerEngine mede transformacoes matematicas em CPU. O campo estimadoFPS e uma estimativa derivada de operacoes por segundo, nao FPS real de renderizacao. FPS real deve ser medido no callback onDrawFrame.
+5. O renderizador 3D atual desenha geometria com buffers reutilizados, mas a cena ainda nao possui pipeline completo de texturas UV, mapas de sombra ou pos-processamento. A iluminacao Phong do shader e calculada por pixel, mas nao equivale a sombras dinamicas.
+6. O dispatcher e o pool do SuperComputerEngine adicionam filas e threads. A quantidade de workers deve ser dimensionada por medicao no aparelho; mais threads nao significam automaticamente mais desempenho, especialmente no Galaxy A10s.
+7. O projeto inclui saidas antigas em app/build. Elas nao sao fontes e podem ficar desatualizadas em relacao ao codigo-fonte; nao foram apagadas nesta revisao para respeitar a preservacao solicitada.
+
+VALIDACAO
+- ZIP de origem extraido sem erro.
+- Inventario de fontes Java e arquivos de configuracao realizado.
+- Confirmada a configuracao Java 7 no Gradle do modulo app.
+- Nao foi executada compilacao Android/Gradle nem teste em GPU neste ambiente.
+
+PROXIMA ETAPA SEGURA
+A integracao deve ser feita de forma incremental: primeiro criar uma API de coordenacao CPU que apenas prepara dados fora da thread GL; depois enviar esses dados para o renderizador pela fila GLThread; em seguida implementar UV/texturas e telemetria real. Nunca executar chamadas GLES20 nos workers. Cada etapa deve ser compilada e testada antes da seguinte.

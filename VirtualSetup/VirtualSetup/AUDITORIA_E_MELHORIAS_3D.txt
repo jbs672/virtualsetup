@@ -1,0 +1,31 @@
+VIRTUALSETUP / FANTASY PC - REVISAO TECNICA
+
+Escopo desta entrega
+- Revisao estrutural do projeto e dos pontos de integracao do Fantasy PC.
+- Melhorias concentradas no renderizador OpenGL ES 2.0 e no ciclo de vida da janela 3D.
+- Compatibilidade de codigo mantida em Java 7 e Android nativo, sem novas dependencias.
+
+Correcoes e melhorias aplicadas
+1. O watchdog do renderizador agora zera a contagem de quadros a cada retomada. Isso impede que quadros antigos escondam uma falha ocorrida depois da recriacao do contexto EGL.
+2. Erros OpenGL retornados apos o desenho agora sao reportados ao mecanismo de contingencia, em vez de serem tratados apenas como ausencia de quadro.
+3. A cena 3D recebeu mais geometria, estruturas perifericas animadas e quatro nucleos orbitais, aumentando o trabalho de transformacao, iluminacao e rasterizacao.
+4. A malha das esferas foi refinada de 22x28 para 28x36 segmentos.
+5. As coordenadas das estruturas foram movidas para arrays estaticos, evitando alocacoes repetidas desses arrays a cada quadro.
+6. A janela Fantasy PC agora pausa o renderizador quando fica invisivel e ao ser removida da janela hospedeira; ao voltar a ficar visivel, solicita retomada segura se o modo 3D estiver selecionado.
+7. O modo 2D original e o caminho de contingencia Canvas foram preservados.
+8. Nenhuma biblioteca externa foi adicionada. A configuracao Java 7 foi preservada.
+9. Arquivos gerados/compilados antigos da pasta app/build foram removidos desta distribuicao-fonte; o AndroidIDE deve gerar novos artefatos ao compilar.
+
+Pontos que exigem validacao no aparelho
+- O projeto nao foi compilado nem executado nesta sessao: este ambiente nao possui Android SDK/android.jar nem Gradle Android configurados.
+- O desempenho real depende da GPU, do driver OpenGL, da resolucao e da memoria disponivel no aparelho.
+- A cena foi aumentada de forma moderada, mas deve ser testada no dispositivo-alvo observando fluidez, temperatura e consumo de bateria por alguns minutos.
+- Nao e tecnicamente possivel garantir ausencia absoluta de falhas sem compilacao e testes no aparelho real. Se houver erro de EGL/driver antes dos callbacks OpenGL, sera necessario o Logcat para diagnostico definitivo.
+
+Roteiro recomendado
+1. Abrir a pasta VirtualSetup no AndroidIDE.
+2. Sincronizar/compilar o projeto e instalar.
+3. Abrir Fantasy PC e executar primeiro o teste 2D.
+4. Abrir Novo motor 3D e deixar a cena rodar por 3 a 5 minutos.
+5. Girar a camera, alternar 2D/3D, minimizar/restaurar a janela e sair/voltar do aplicativo.
+6. Se ocorrer fechamento, enviar o Logcat completo do momento do erro.

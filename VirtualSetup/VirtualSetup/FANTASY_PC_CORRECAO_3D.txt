@@ -1,0 +1,30 @@
+FANTASY PC - CORRECAO DE ESTABILIDADE DO TESTE 3D
+
+Sintoma relatado pelo usuario
+- O PC virtual abre rapidamente e sua interface permanece fluida.
+- O teste original 2D funciona normalmente.
+- Ao selecionar a opcao de demonstracao 3D, o aplicativo fecha imediatamente ou o Android informa que o aplicativo parou de responder.
+- A correcao foi concentrada no caminho 3D. O motor original 2D e a estrutura geral do projeto foram mantidos.
+
+Alteracoes desta revisao
+1. O GLSurfaceView agora solicita um framebuffer RGB565 com depth buffer de 16 bits, uma configuracao mais compativel com GPUs Android antigas e drivers simples.
+2. O contexto OpenGL nao e preservado ao pausar. Ao voltar para o 3D, o contexto e recriado e os shaders/recursos sao inicializados novamente.
+3. A janela 3D fica visivel antes de o renderizador ser retomado; a retomada e agendada depois que a view recebe dimensoes validas.
+4. Falhas na compilacao/vinculacao dos shaders, na configuracao da superficie e durante o desenho sao capturadas dentro dos callbacks do renderizador. Em vez de lancar RuntimeException nesses pontos, o motor interrompe o desenho 3D e informa o erro na barra superior da demonstracao.
+5. A verificacao dos atributos e uniformes do shader foi reforcada.
+6. O painel 2D continua separado e nao depende do renderizador OpenGL.
+7. Nenhuma biblioteca externa foi adicionada. O projeto continua configurado para Java 7.
+
+Como testar
+1. Extraia o ZIP.
+2. Abra a pasta VirtualSetup no AndroidIDE/AIDE.
+3. Compile e instale o aplicativo.
+4. Abra o PC virtual e entre na demonstracao.
+5. Teste primeiro o motor original 2D.
+6. Selecione Novo motor 3D.
+7. Se houver falha interna de shader/renderizacao, leia a mensagem exibida na barra superior e envie uma captura de tela.
+
+Limites importantes
+- Esta revisao melhora a compatibilidade e evita que excecoes originadas nos callbacks do renderizador encerrem o processo. Nenhum software pode ser declarado a prova de falhas sem testes no aparelho real.
+- A alternativa Canvas e ativada quando o aparelho nao anuncia suporte a OpenGL ES 2.0. Em aparelhos que anunciam ES 2.0, mas cujo driver/EGL falha fatalmente antes de o Android chamar os callbacks do Renderer, ainda pode ocorrer encerramento da thread grafica; se isso ocorrer, sera necessario o Logcat do aparelho para identificar o codigo EGL/driver exato.
+- O pacote foi verificado estruturalmente (integridade do ZIP e arquivos), mas nao foi compilado nem executado neste ambiente, pois nao ha Android SDK/Gradle instalados aqui.

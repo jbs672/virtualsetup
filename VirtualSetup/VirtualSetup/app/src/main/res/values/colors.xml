@@ -1,0 +1,10 @@
+<resources>
+    <color name="win_face">#C0C0C0</color>
+    <color name="win_light">#DFDFDF</color>
+    <color name="win_highlight">#FFFFFF</color>
+    <color name="win_shadow">#808080</color>
+    <color name="win_dark">#000000</color>
+    <color name="win_title_active">#000080</color>
+    <color name="win_title_inactive">#808080</color>
+    <color name="win_desktop">#008080</color>
+</resources>

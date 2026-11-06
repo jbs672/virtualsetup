@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/desktop_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/win_desktop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/desktop_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- Papel de parede (recebe o toque longo de 1000 ms) -->
+            <com.example.desktopenv.WallpaperView
+                android:id="@+id/wallpaper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Icones da area de trabalho -->
+            <FrameLayout
+                android:id="@+id/icon_layer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Janelas -->
+            <FrameLayout
+                android:id="@+id/window_layer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <com.example.desktopenv.TaskbarView
+            android:id="@+id/taskbar"
+            android:layout_width="match_parent"
+            android:layout_height="34dp" />
+    </LinearLayout>
+
+    <!-- Camada de menus de contexto / menu Iniciar (sempre por cima) -->
+    <FrameLayout
+        android:id="@+id/overlay_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
