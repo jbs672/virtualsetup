@@ -2,7 +2,7 @@
 
 # 🖥️ VirtualSetup / Fantasy PC
 
-> Um sistema operacional virtual sovrano e de arquitetura própria, desenvolvido do absoluto zero para dispositivos móveis — focado em extrema leveza, eficiência de recursos e autonomia de baixo nível.
+> Um sistema operacional virtual soberano e de arquitetura própria, desenvolvido do absoluto zero para dispositivos móveis — focado em extrema leveza, eficiência de recursos e autonomia de baixo nível.
 
 ---
 
